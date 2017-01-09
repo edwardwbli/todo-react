@@ -26,6 +26,6 @@
   "homepage": "https://github.com/gundb/todo-react#readme",
   "dependencies": {
     "express": "^4.14.0",
-    "gun": "^0.3.94"
+    "gun": "^0.3.9991"
   }
 }
