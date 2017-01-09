@@ -7,6 +7,7 @@ var join = require('path').join;
 var Gun = require('gun');
 var gun = new Gun();
 
+/*gun wsp*/
 gun.wsp(app);
 
 var www = join(__dirname, 'www');

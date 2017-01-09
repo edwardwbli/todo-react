@@ -5,18 +5,40 @@
   <script src="/gun.js"></script>
   <script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
   <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
-
+  <style media="screen" type="text/css">
+    .todocontent, .inprogresscontent {
+      float: left;
+      position: relative;
+      left: 20%;
+      margin-left: 10px;
+    }
+    h1 {
+      margin-left: 20%;
+    }
+    li {
+      color: red;
+      font-weight: bolder;
+    }
+  </style>
 </head>
 <body>
-  <h1>Todos</h1>
+  <div class="todocontent">
+    <h1>Todos</h1>
 
-  <div id="root"></div>
+    <div id="todo"></div>
+  </div>
+
+  <div class="inprogresscontent">
+    <h1>In progress</h1>
+    <div id="inprogress"></div>
+  </div>
+
 
   <script>
    var gun = Gun(location.origin + '/gun');
    var todo = gun.get('todo');
 
-   var rootElem = React.createClass({
+   var todoElem = React.createClass({
     getInitialState(){ return {items: {}} },
     componentDidMount(){
       todo.map((value,id) => {
@@ -41,9 +63,38 @@
     }
    });
 
-   ReactDOM.render(React.createElement(rootElem, {}),
-     document.getElementById('root'));
+   ReactDOM.render(React.createElement(todoElem, {}),
+     document.getElementById('todo'));
 
+     var inprogress = gun.get('inprogress');
+
+     var inprogressElem = React.createClass({
+      getInitialState(){ return {items: {}} },
+      componentDidMount(){
+        inprogress.map((value,id) => {
+          let items = Object.assign({}, this.state.items, {[id]: value});
+          this.setState({items});
+        });
+      },
+      onSubmit(e){
+        e.preventDefault();
+        inprogress.path(Gun.text.random()).put(this.item.value);
+        console.log('adding', this.item.value);
+      },
+      render(){
+        let items = Object.keys(this.state.items).map(i =>
+          React.createElement("li", {key: i}, this.state.items[i])
+        );
+        return React.createElement("form", {onSubmit: this.onSubmit},
+          React.createElement("input", {ref:(item) => { this.item = item; }}),
+          React.createElement("input", {type:'submit',value:'add'}),
+          React.createElement("ul", {}, items)
+        );
+      }
+     });
+
+     ReactDOM.render(React.createElement(inprogressElem, {}),
+       document.getElementById('inprogress'));
   </script>
 </body>
 </html>
