@@ -1,4 +1,9 @@
+
 var port = process.argv[2] || process.env.PORT || 8080;
+
+process.argv.forEach( (item) => {
+    console.log(item);
+});
 
 var express = require('express');
 var app = express();
