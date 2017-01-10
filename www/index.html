@@ -53,6 +53,7 @@
     },
     render(){
       let items = Object.keys(this.state.items).map(i =>
+        /*TODO add span field to delete item from Gundb*/
         React.createElement("li", {key: i}, this.state.items[i])
       );
       return React.createElement("form", {onSubmit: this.onSubmit},
