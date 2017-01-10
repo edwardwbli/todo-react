@@ -20,9 +20,10 @@
       font-weight: bolder;
     }
    .inprogresscontent li {
+     font-size: 10px;
      color: blue;
      font-weight: 500;
-     background-color: pink;
+     background-color: #00ff88;
      margin-top: 3px;
    }
   </style>
@@ -41,7 +42,8 @@
 
 
   <script>
-   var gun = Gun(location.origin + '/gun');
+
+   var gun = Gun(location.origin + '/gun'); /*location.origin will be host name, such as http://localhost:8080/*/
    var todo = gun.get('todo');
 
    var todoElem = React.createClass({
@@ -72,9 +74,9 @@
    ReactDOM.render(React.createElement(todoElem, {}),
      document.getElementById('todo'));
 
-     var inprogress = gun.get('inprogress');
+   var inprogress = gun.get('inprogress');
 
-     var inprogressElem = React.createClass({
+   var inprogressElem = React.createClass({
       getInitialState(){ return {items: {}} },
       componentDidMount(){
         inprogress.map((value,id) => {
@@ -99,7 +101,7 @@
       }
      });
 
-     ReactDOM.render(React.createElement(inprogressElem, {}),
+   ReactDOM.render(React.createElement(inprogressElem, {}),
        document.getElementById('inprogress'));
   </script>
 </body>
