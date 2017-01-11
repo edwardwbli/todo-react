@@ -41,7 +41,7 @@
    var todoElem = React.createClass({
     getInitialState(){ return {items: {}} },
     componentDidMount(){
-      todo.map((value,id) => {
+      todo.map( function(value,id) {
         let items = Object.assign({}, this.state.items, {[id]: value});
         this.setState({items});
       });
@@ -52,12 +52,13 @@
       console.log('adding', this.item.value);
     },
     render(){
-      let items = Object.keys(this.state.items).map(i =>
+      let items = Object.keys(this.state.items).map(function(i) {
         /*TODO add span field to delete item from Gundb*/
         React.createElement("li", {key: i}, this.state.items[i])
+        }
       );
       return React.createElement("form", {onSubmit: this.onSubmit},
-        React.createElement("input", {ref:(item) => { this.item = item; }}),
+        React.createElement("input", {ref:function(item) { this.item = item; }}),
         React.createElement("input", {type:'submit',value:'add'}),
         React.createElement("ul", {}, items)
       );
@@ -72,7 +73,7 @@
      var inprogressElem = React.createClass({
       getInitialState(){ return {items: {}} },
       componentDidMount(){
-        inprogress.map((value,id) => {
+        inprogress.map(function(value,id){
           let items = Object.assign({}, this.state.items, {[id]: value});
           this.setState({items});
         });
@@ -83,11 +84,12 @@
         console.log('adding', this.item.value);
       },
       render(){
-        let items = Object.keys(this.state.items).map(i =>
+        let items = Object.keys(this.state.items).map( function(i) {
           React.createElement("li", {key: i}, this.state.items[i])
+          }
         );
         return React.createElement("form", {onSubmit: this.onSubmit},
-          React.createElement("input", {ref:(item) => { this.item = item; }}),
+          React.createElement("input", {ref:function(item) { this.item = item; }}),
           React.createElement("input", {type:'submit',value:'add'}),
           React.createElement("ul", {}, items)
         );
