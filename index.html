@@ -43,7 +43,7 @@
     getInitialState(){ return {items: {}} },
     componentDidMount(){
       todo.map( function(value,id) {
-        let items = Object.assign({}, this.state.items, {[id]: value});
+        let items = Object.assign({}, this.state.items, {id: value});
         this.setState({items});
       });
     },
@@ -75,7 +75,7 @@
       getInitialState(){ return {items: {}} },
       componentDidMount(){
         inprogress.map(function(value,id){
-          let items = Object.assign({}, this.state.items, {[id]: value});
+          let items = Object.assign({}, this.state.items, {id: value});
           this.setState({items});
         });
       },
