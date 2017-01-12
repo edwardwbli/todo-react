@@ -42,7 +42,9 @@
     getInitialState(){ return {items: {}} },
     componentDidMount(){
       todo.map((value,id) => {
-        let items = Object.assign({}, this.state.items, {[id]: value});
+        let obj = {}
+        obj[id] = value
+        let items = Object.assign({}, this.state.items, obj);
         this.setState({items});
       });
     },
