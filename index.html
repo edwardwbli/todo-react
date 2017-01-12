@@ -45,8 +45,9 @@
       todo.map( function(value,id) {
         let litems = Object.assign({}, this.state.todoitems, {id: value});
         this.setState({litems});
-      });
-    }.bind(this),
+      }).bind(this);
+    },
+     
     onSubmit(e){
       e.preventDefault();
       todo.path(Gun.text.random()).put(this.refs.todovalue.value);
