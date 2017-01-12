@@ -42,12 +42,10 @@
    var todoElem = React.createClass({
     getInitialState(){ return {todoitems: {}} },
     componentDidMount(){
-        var gundbUpdate = function(value, id){
-        console.log(this.state.todoitems);
-        let litems =  this.state.todoitems+{id: value};
-        this.setState({litems});
-       }.bind(this); 
-      todo.map(gundbUpdate);
+      var self = this;
+      todo.map(function(value,id) {
+         let items = Object.assign({}, self.state.items, {id: value});
+         self.setState({items});
     },
      
 
