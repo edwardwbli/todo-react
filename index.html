@@ -42,11 +42,11 @@
    var todoElem = React.createClass({
     getInitialState(){ return {todoitems: {}} },
     componentDidMount(){
-        let gundbUpdate = function(value, id){
+        var gundbUpdate = function(value, id){
         console.log(this.state.todoitems);
         let litems = Object.assign({}, this.state.todoitems, {id: value});
         this.setState({litems});
-       }; 
+       }.bint(this); 
       todo.map(gundbUpdate);
     },
      
