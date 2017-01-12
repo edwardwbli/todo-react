@@ -43,8 +43,8 @@
     getInitialState(){ return {items: {}} },
     componentDidMount(){
       todo.map( function(value,id) {
-        let items = Object.assign({}, this.state.items, {id: value});
-        this.setState({items});
+        let litems = Object.assign({}, this.state.items, {id: value});
+        this.setState({litems});
       });
     },
     onSubmit(e){
