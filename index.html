@@ -50,7 +50,7 @@
         let obj = {};
         obj[id] = value;
         console.log(obj)
-        items = Object.assign({}, todocomp.state.todoitems, obj);
+        items = Object.assign({}, items, obj);
         console.log(items);
         todocomp.setState({items});
       });
