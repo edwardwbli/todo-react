@@ -47,7 +47,7 @@
       todo.on().map(function(value,id) {
          let items = Object.assign({}, self.state.items, {id: value});
          self.setState({items});
-        console.log(this.state.items);
+        console.log(self.state.items);
       });
       
     },
