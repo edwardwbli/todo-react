@@ -45,7 +45,9 @@
     componentDidMount(){
       var self = this;
       todo.map(function(value,id) {
-         let items = Object.assign({}, self.state.todoitems, {[id]: value});
+        let obj = {};
+        obj[id] = value;
+         let items = Object.assign({}, self.state.todoitems, obj);
          self.setState({items});
         console.log(self.state.todoitems);
       });
