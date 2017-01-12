@@ -49,7 +49,7 @@
     gundbUpdate(value, id){
         console.log(this.state.todoitems);
         let litems = Object.assign({}, this.state.todoitems, {id: value});
-        this.setState({litems}),
+        this.setState({litems});
   },                                   
     onSubmit(e){
       e.preventDefault();
