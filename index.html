@@ -56,7 +56,7 @@
     },
     onSubmit(e){
       e.preventDefault();
-      todo.path(Gun.text.random()).set(this.refs.todovalue.value);
+      todo.path(Gun.text.random()).put(this.refs.todovalue.value);
       console.log('adding', this.refs.todovalue.value);
       this.refs.todovalue.value = "";
     },
