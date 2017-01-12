@@ -43,14 +43,15 @@
    var todoElem = React.createClass({
     getInitialState(){ return {todoitems: {}} },
     componentDidMount(){
-      var self = this;
+      var todocomp = this;
       var items = {};
       todo.map(function(value,id) {
          console.log("value: " + value + " id:" + id);
-        items = Object.assign({}, self.state.todoitems, {id: value});
+        items = Object.assign({}, todocomp.state.todoitems, {id: value});
         console.log(items);
+        todocomp.setState({items});
       });
-     this.setState({items});
+     
      console.log(this.state.todoitems);
       
     },
