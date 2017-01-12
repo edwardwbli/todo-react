@@ -57,7 +57,7 @@
       e.preventDefault();
       todo.path(Gun.text.random()).set(this.refs.todovalue.value);
       console.log('adding', this.refs.todovalue.value);
-      this.refs.todovalue.val("")
+      this.refs.todovalue.value = "";
     },
     render(){
       let items = Object.keys(this.state.todoitems).map(function(i) {
