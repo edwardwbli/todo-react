@@ -40,10 +40,10 @@
    var todo = gun.get('todo');
 
    var todoElem = React.createClass({
-    getInitialState(){ return {items: {}} },
+    getInitialState(){ return {todoitems: {}} },
     componentDidMount(){
       todo.map( function(value,id) {
-        let litems = Object.assign({}, this.state.items, {id: value});
+        let litems = Object.assign({}, this.state.todoitems, {id: value});
         this.setState({litems});
       });
     },
@@ -53,12 +53,12 @@
       console.log('adding', this.refs.todovalue.value);
     },
     render(){
-      let items = Object.keys(this.state.items).map(function(i) {
+      let items = Object.keys(this.state.todoitems).map(function(i) {
         /*TODO add span field to delete item from Gundb*/
-        React.createElement("li", {key: i}, this.state.items[i])
+        React.createElement("li", {key: i}, this.state.todoitems[i])
         }
       );
-      return React.createElement("form", {onSubmit: this.onSubmit.bind(this)},
+      return React.createElement("form", {onSubmit: this.onSubmit},
         React.createElement("input", {ref: "todovalue"}),
         React.createElement("input", {type:'submit',value:'add'}),
         React.createElement("ul", {}, items)
