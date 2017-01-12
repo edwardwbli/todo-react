@@ -81,16 +81,16 @@
       },
       onSubmit(e){
         e.preventDefault();
-        inprogress.path(Gun.text.random()).put(this.item.value);
-        console.log('adding', this.item.value);
+        inprogress.path(Gun.text.random()).put(this.refs.inprvalue.value);
+        console.log('adding', this.refs.inprvalue.value);
       },
       render(){
         let items = Object.keys(this.state.items).map( function(i) {
           React.createElement("li", {key: i}, this.state.items[i])
           }
         );
-        return React.createElement("form", {onSubmit: this.onSubmit},
-          React.createElement("input", {ref:function(item) { this.item = item; }}),
+        return React.createElement("form", {onSubmit: this.onSubmit.bind(this)},
+          React.createElement("input", {ref:"inprvalue"}),
           React.createElement("input", {type:'submit',value:'add'}),
           React.createElement("ul", {}, items)
         );
