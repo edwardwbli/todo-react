@@ -42,15 +42,16 @@
    var todoElem = React.createClass({
     getInitialState(){ return {todoitems: {}} },
     componentDidMount(){
-      
-      todo.map(gundbUpdate(value, id));
-    },
-     
-    gundbUpdate(value, id){
+       gundbUpdate(value, id){
         console.log(this.state.todoitems);
         let litems = Object.assign({}, this.state.todoitems, {id: value});
         this.setState({litems});
-  },                                   
+       }; 
+      todo.map(gundbUpdate(value, id));
+    },
+     
+
+     
     onSubmit(e){
       e.preventDefault();
       todo.path(Gun.text.random()).put(this.refs.todovalue.value);
