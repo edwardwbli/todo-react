@@ -44,15 +44,14 @@
     getInitialState(){ return {todoitems: {}} },
     componentDidMount(){
       var self = this;
+      vart items = {};
       todo.map(function(value,id) {
          console.log("value: " + value + " id:" + id);
-         let obj = {"ok":"ok"};
-        
-         let items = Object.assign({}, self.state.todoitems, obj);
+        items = Object.assign({}, self.state.todoitems, {id: value});
         console.log(items);
-        self.setState({items});
-        console.log(self.state.todoitems);
       });
+     this.setState({items});
+     console.log(this.state.todoitems);
       
     },
     onSubmit(e){
