@@ -26,6 +26,10 @@
      background-color: #00ff88;
      margin-top: 3px;
    }
+   span {
+     color: grey;
+     margin-left: 30px;
+   }
   </style>
 </head>
 <body>
@@ -59,11 +63,21 @@
       todo.path(Gun.text.random()).put(this.item.value);
       console.log('adding', this.item.value);
     },
-    render(){
+    onClick(i) {
+      console.log('delete ' + i);
+      todo.path(i).put(null);
+
+    },
+    render() {
       let items = Object.keys(this.state.items).map(i =>
         /*TODO add span field to delete item from Gundb*/
-        React.createElement("li", {key: i}, this.state.items[i])
+        /*bind event of this, then the handler can get the corresponding element and its argv*/
+        this.state.items[i] ?
+           React.createElement("li", {key: i}, this.state.items[i],
+           React.createElement("span", {id: i, onClick: this.onClick.bind(this, i)}, " X" )) : ''
+
       );
+      /*ref: will help to create a reference to element itself, e.g. */
       return React.createElement("form", {onSubmit: this.onSubmit},
         React.createElement("input", {ref:(item) => { this.item = item; }}),
         React.createElement("input", {type:'submit',value:'add'}),
@@ -90,9 +104,17 @@
         inprogress.path(Gun.text.random()).put(this.item.value);
         console.log('adding', this.item.value);
       },
+      onClick(i) {
+        console.log('delete ' + i);
+        todo.path(i).put(null);
+
+      },
       render(){
         let items = Object.keys(this.state.items).map(i =>
-          React.createElement("li", {key: i}, this.state.items[i])
+          this.state.items[i] ?
+             React.createElement("li", {key: i}, this.state.items[i],
+             React.createElement("span", {id: i, onClick: this.onClick.bind(this, i)}, " X" )) : ''
+
         );
         return React.createElement("form", {onSubmit: this.onSubmit},
           React.createElement("input", {ref:(item) => { this.item = item; }}),
