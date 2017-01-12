@@ -49,7 +49,7 @@
     },
     onSubmit(e){
       e.preventDefault();
-      todo.path(Gun.text.random()).put(this.item.value);
+      todo.path(Gun.text.random()).put(this.refs.todovalue.value);
       console.log('adding', this.item.value);
     },
     render(){
@@ -58,8 +58,8 @@
         React.createElement("li", {key: i}, this.state.items[i])
         }
       );
-      return React.createElement("form", {onSubmit: this.onSubmit},
-        React.createElement("input", {ref:function(item) { this.item = item; }}),
+      return React.createElement("form", {onSubmit: this.onSubmit.bind(this)},
+        React.createElement("input", {ref: "todovalue"}),
         React.createElement("input", {type:'submit',value:'add'}),
         React.createElement("ul", {}, items)
       );
