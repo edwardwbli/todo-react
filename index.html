@@ -47,11 +47,8 @@
          let items = Object.assign({}, self.state.items, {id: value});
          self.setState({items});
         
-      };
+      });
     },
-     
-
-     
     onSubmit(e){
       e.preventDefault();
       todo.path(Gun.text.random()).put(this.refs.todovalue.value);
