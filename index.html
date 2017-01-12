@@ -47,7 +47,10 @@
       var items = {};
       todo.map(function(value,id) {
          console.log("value: " + value + " id:" + id);
-        items = Object.assign({}, todocomp.state.todoitems, {id: value});
+        let obj = {};
+        obj[id] = value;
+        console.log(obj)
+        items = Object.assign({}, todocomp.state.todoitems, obj);
         console.log(items);
         todocomp.setState({items});
       });
@@ -94,7 +97,7 @@
         console.log('adding', this.refs.inprvalue.value);
       },
       render(){
-        let items = Object.keys(this.state.items).map( function(i) {
+        let items = Object.keys(this.state.items).map( function(i) { 
           React.createElement("li", {key: i}, this.state.items[i])
           }
         );
