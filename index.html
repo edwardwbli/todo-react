@@ -46,7 +46,7 @@
         console.log(this.state.todoitems);
         let litems = Object.assign({}, this.state.todoitems, {id: value});
         this.setState({litems});
-       }.bint(this); 
+       }.bind(this); 
       todo.map(gundbUpdate);
     },
      
