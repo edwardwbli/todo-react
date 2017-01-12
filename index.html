@@ -35,7 +35,7 @@
 
 
   <script>
-   "use strict";
+   
    var gun = Gun();
    var todo = gun.get('todo');
 
@@ -50,7 +50,7 @@
     onSubmit(e){
       e.preventDefault();
       todo.path(Gun.text.random()).put(this.refs.todovalue.value);
-      console.log('adding', this.item.value);
+      console.log('adding', this.refs.todovalue.value);
     },
     render(){
       let items = Object.keys(this.state.items).map(function(i) {
