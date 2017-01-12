@@ -1,0 +1,26 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/nvm/versions/node/v4.1.2/bin/node /usr/local/nvm/versions/node/v4.1.2/bin/firebase login
+[debug] CLI Version:  3.2.0
+[debug] Platform:     linux
+[debug] Node Version: v4.1.2
+[debug] Time:         Wed Jan 11 2017 14:06:50 GMT+0800 (BNT)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] 
+[info] Visit this URL on any device to log in:
+[info] https://accounts.google.com/o/oauth2/auth?client_id=563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com&scope=email%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloudplatformprojects.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffirebase&response_type=code&state=74680552&redirect_uri=http%3A%2F%2Flocalhost%3A9005
+[info] 
+[info] Waiting for authentication...
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/nvm/versions/node/v4.1.2/bin/node /usr/local/nvm/versions/node/v4.1.2/bin/firebase login
+[debug] CLI Version:  3.2.0
+[debug] Platform:     linux
+[debug] Node Version: v4.1.2
+[debug] Time:         Wed Jan 11 2017 14:10:20 GMT+0800 (BNT)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] 
+[info] Visit this URL on any device to log in:
+[info] https://accounts.google.com/o/oauth2/auth?client_id=563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com&scope=email%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloudplatformprojects.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffirebase&response_type=code&state=616066101&redirect_uri=http%3A%2F%2Flocalhost%3A9005
+[info] 
+[info] Waiting for authentication...
