@@ -46,7 +46,6 @@
 
 
   <script>
-
    var gun = Gun(location.origin + '/gun'); /*location.origin will be host name, such as http://localhost:8080/*/
    var todo = gun.get('todo');
 
@@ -54,7 +53,6 @@
     getInitialState(){ return {items: {}} },
     componentDidMount(){
       todo.map((value,id) => {
-
         let items = Object.assign({}, this.state.items, {[id]: value});
         this.setState({items});
       });
@@ -63,19 +61,35 @@
       e.preventDefault();
       todo.path(Gun.text.random()).put(this.item.value);
       console.log('adding', this.item.value);
+      this.item.value = "";
     },
     onClick(i) {
       console.log('delete ' + i);
       todo.path(i).put(null);
 
     },
+    /*
+    onClick(e) {
+      console.log('delete ' + e.currentTarget.id )
+      todo.path(e.currentTarget.id).put(nul)
+    },
+    */
     render() {
       let items = Object.keys(this.state.items).map(i =>
-        /*TODO add span field to delete item from Gundb*/
         /*bind event of this, then the handler can get the corresponding element and its argv*/
+        /*React component methods may only be bound to the component instance. in this case onClick is React
+        component methods,
+        /*there is alternative which is using e.currentTarget.id in onClick method to refer to current DOM node's id
+        , without bind for this.onClick, for example :
+
         this.state.items[i] ?
            React.createElement("li", {key: i}, this.state.items[i],
-           React.createElement("span", {id: i, onClick: this.onClick.bind(this, i)}, " X" )) : ''
+           React.createElement("span", {id: i, onClick: this.onClick}, " X" )) : ''
+
+        */
+        this.state.items[i] ?
+           React.createElement("li", {key: i}, this.state.items[i],
+           React.createElement("span", {id: i, onClick: this.onClick.bind(this,i)}, " X" )) : ''
 
       );
       /*ref: will help to create a reference to element itself, e.g. */
