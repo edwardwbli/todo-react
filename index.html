@@ -46,13 +46,11 @@
       var todocomp = this;
       var items = {};
       todo.map(function(value,id) {
-         console.log("value: " + value + " id:" + id);
         let obj = {};
         obj[id] = value;
-        console.log(obj)
         items = Object.assign({}, items, obj);
         console.log(items);
-        todocomp.setState({todoitems: items});
+        todocomp.setState({items});
       });
 
      console.log(this.state.todoitems);
