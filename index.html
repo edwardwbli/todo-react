@@ -36,7 +36,7 @@
 
 
   <script>
-   "use strict";   
+   "use strict";
    var gun = Gun();
    var todo = gun.get('todo');
 
@@ -54,9 +54,9 @@
         console.log(items);
         todocomp.setState({todoitems: items});
       });
-     
+
      console.log(this.state.todoitems);
-      
+
     },
     onSubmit(e){
       e.preventDefault();
@@ -65,9 +65,10 @@
       this.refs.todovalue.value = "";
     },
     render(){
+      let that = this;
       let items = Object.keys(this.state.todoitems).map(function(i) {
         /*TODO add span field to delete item from Gundb*/
-        React.createElement("li", {key: i}, this.state.todoitems[i])
+        React.createElement("li", {key: i}, that.state.todoitems[i])
         }
       );
       return React.createElement("form", {onSubmit: this.onSubmit},
@@ -97,7 +98,7 @@
         console.log('adding', this.refs.inprvalue.value);
       },
       render(){
-        let items = Object.keys(this.state.items).map( function(i) { 
+        let items = Object.keys(this.state.items).map( function(i) {
           React.createElement("li", {key: i}, this.state.items[i])
           }
         );
