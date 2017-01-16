@@ -5,6 +5,9 @@
   <script src="/gun.js"></script>
   <script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
   <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.4.4/babel.min.js"></script>
+
   <style media="screen" type="text/css">
     .todocontent, .inprogresscontent {
       float: left;
@@ -14,6 +17,8 @@
     }
     h1 {
       margin-left: 20%;
+      position: relative;
+
     }
    .todocontent li {
       color: red;
@@ -30,23 +35,91 @@
      color: grey;
      margin-left: 30px;
    }
+   div#addkanban {
+     color: #aaaaaa;
+     float: right;
+     font-size: 28px;
+     font-weight: bold;
+   }
+
+   div#addkanban:hover,
+   div#addkanban:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+   }
+   div#tdkb {
+     position: relative;
+
+   }
+   #poppubox {
+     z-index: 1;
+     color: #aaaaaa;
+     font-size: 28px;
+     font-weight: bold;
+
+   }
+   #board {
+     float: left;
+     position: relative;
+     left: 20%;
+     margin-left: 10px;
+   }
   </style>
 </head>
 <body>
+  <div class="kanbanheader">
+    <h1>Kanban</h1>
+  </div>
+  <div id="tdkb">
+
+  </div>
+
   <div class="todocontent">
-    <h1>Todos</h1>
 
     <div id="todo"></div>
   </div>
 
   <div class="inprogresscontent">
-    <h1>In progress</h1>
     <div id="inprogress"></div>
   </div>
 
 
-  <script>
+  <script type="text/babel">
    var gun = Gun(location.origin + '/gun'); /*location.origin will be host name, such as http://localhost:8080/*/
+
+   var popbox = React.createClass({
+     render() {
+       return (
+         <div id="poppubox">ADD kanban</div>
+       )
+     }
+   });
+
+   var tdkbapp = React.createClass({
+    getInitialState(){
+      var tdkb = gun.get('tdkb');
+      return {tdkb: tdkb, poppubox:'', items:{}}
+    },
+    onClick() {
+      console.log(this.state.tdkb);
+      let poppubox = React.createElement(popbox,{});
+      this.state.poppubox ?
+      this.setState({poppubox: ''}) :
+      this.setState({poppubox: poppubox});
+
+     },
+    render(){
+
+      return React.createElement("div",{},
+        React.createElement("div",{id: "addkanban",onClick:this.onClick},"+ add kanban"),
+        this.state.poppubox
+       )
+    }
+   }
+   );
+
+
    var todo = gun.get('todo');
 
    var todoElem = React.createClass({
@@ -54,7 +127,7 @@
     componentDidMount(){
       todo.map((value,id) => {
         let items = Object.assign({}, this.state.items, {[id]: value});
-        this.setState({items});
+        this.setState({items: items});
       });
     },
     onSubmit(e){
@@ -93,16 +166,16 @@
 
       );
       /*ref: will help to create a reference to element itself, e.g. */
-      return React.createElement("form", {onSubmit: this.onSubmit},
+      return React.createElement("div",{createClass:"todocontent"},React.createElement("h1",{},"TODO"),
+        React.createElement("form", {onSubmit: this.onSubmit},
         React.createElement("input", {ref:(item) => { this.item = item; }}),
         React.createElement("input", {type:'submit',value:'add'}),
         React.createElement("ul", {}, items)
+        )
       );
     }
    });
 
-   ReactDOM.render(React.createElement(todoElem, {}),
-     document.getElementById('todo'));
 
    var inprogress = gun.get('inprogress');
 
@@ -120,8 +193,8 @@
         console.log('adding', this.item.value);
       },
       onClick(i) {
-        console.log('delete ' + i);
-        todo.path(i).put(null);
+        console.log('inprogrss delete ' + i);
+        inprogress.path(i).put(null);
 
       },
       render(){
@@ -131,16 +204,24 @@
              React.createElement("span", {id: i, onClick: this.onClick.bind(this, i)}, " X" )) : ''
 
         );
-        return React.createElement("form", {onSubmit: this.onSubmit},
+        return React.createElement("div",{id: "board"},React.createElement("h1",{},"In Progress"),
+          React.createElement("form", {onSubmit: this.onSubmit},
           React.createElement("input", {ref:(item) => { this.item = item; }}),
           React.createElement("input", {type:'submit',value:'add'}),
           React.createElement("ul", {}, items)
+          )
         );
       }
      });
 
-   ReactDOM.render(React.createElement(inprogressElem, {}),
-       document.getElementById('inprogress'));
+
+   ReactDOM.render(React.createElement("div", {id:"root"},
+         React.createElement(tdkbapp, {}),
+         React.createElement(todoElem, {}),
+         React.createElement(inprogressElem, {})
+         ),
+         document.getElementById("tdkb")
+       );
   </script>
 </body>
 </html>
