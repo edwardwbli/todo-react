@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>ToDo</title>
-  <script src="/gun.js"></script>
+  <script src="https://cdn.rawgit.com/amark/gun/master/gun.js"></script>
   <script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
   <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
@@ -48,10 +48,7 @@
     text-decoration: none;
     cursor: pointer;
    }
-   div#tdkb {
-     position: relative;
 
-   }
    #poppubox {
      z-index: 1;
      color: #aaaaaa;
@@ -75,35 +72,26 @@
 
   </div>
 
-  <div class="todocontent">
-
-    <div id="todo"></div>
-  </div>
-
-  <div class="inprogresscontent">
-    <div id="inprogress"></div>
-  </div>
-
 
   <script type="text/babel">
    var gun = Gun(location.origin + '/gun'); /*location.origin will be host name, such as http://localhost:8080/*/
 
-   var popbox = React.createClass({
+   var PopBox = React.createClass({
      render() {
        return (
          <div id="poppubox">ADD kanban</div>
-       )
+       );
      }
    });
 
-   var tdkbapp = React.createClass({
+   var Tdkbapp = React.createClass({
     getInitialState(){
       var tdkb = gun.get('tdkb');
       return {tdkb: tdkb, poppubox:'', items:{}}
     },
     onClick() {
       console.log(this.state.tdkb);
-      let poppubox = React.createElement(popbox,{});
+      let poppubox = <PopBox />;
       this.state.poppubox ?
       this.setState({poppubox: ''}) :
       this.setState({poppubox: poppubox});
@@ -111,10 +99,12 @@
      },
     render(){
 
-      return React.createElement("div",{},
-        React.createElement("div",{id: "addkanban",onClick:this.onClick},"+ add kanban"),
-        this.state.poppubox
-       )
+      return (
+        <div>
+          <div id="addkanban" onClick={this.onClick}>+ add kanban</div>
+          {this.state.poppubox}
+        </div>
+      );
     }
    }
    );
@@ -122,7 +112,7 @@
 
    var todo = gun.get('todo');
 
-   var todoElem = React.createClass({
+   var TodoElem = React.createClass({
     getInitialState(){ return {items: {}} },
     componentDidMount(){
       todo.map((value,id) => {
@@ -148,30 +138,37 @@
     },
     */
     render() {
+      /*bind event of this, then the handler can get the corresponding element and its argv*/
+      /*React component methods may only be bound to the component instance. in this case onClick is React
+      component methods,
+      /*there is alternative which is using e.currentTarget.id in onClick method to refer to current DOM node's id
+      , without bind for this.onClick, for example :
+
+      this.state.items[i] ?
+         React.createElement("li", {key: i}, this.state.items[i],
+         React.createElement("span", {id: i, onClick: this.onClick}, " X" )) : ''
+
+      */
       let items = Object.keys(this.state.items).map(i =>
-        /*bind event of this, then the handler can get the corresponding element and its argv*/
-        /*React component methods may only be bound to the component instance. in this case onClick is React
-        component methods,
-        /*there is alternative which is using e.currentTarget.id in onClick method to refer to current DOM node's id
-        , without bind for this.onClick, for example :
-
-        this.state.items[i] ?
-           React.createElement("li", {key: i}, this.state.items[i],
-           React.createElement("span", {id: i, onClick: this.onClick}, " X" )) : ''
-
-        */
-        this.state.items[i] ?
-           React.createElement("li", {key: i}, this.state.items[i],
-           React.createElement("span", {id: i, onClick: this.onClick.bind(this,i)}, " X" )) : ''
+        this.state.items[i] ? (
+           <li key={i}>{this.state.items[i]}
+            <span id={i} onClick={this.onClick.bind(this,i)}>X</span>
+           </li>) : ''
 
       );
       /*ref: will help to create a reference to element itself, e.g. */
-      return React.createElement("div",{createClass:"todocontent"},React.createElement("h1",{},"TODO"),
-        React.createElement("form", {onSubmit: this.onSubmit},
-        React.createElement("input", {ref:(item) => { this.item = item; }}),
-        React.createElement("input", {type:'submit',value:'add'}),
-        React.createElement("ul", {}, items)
-        )
+      return (
+        <div className="todocontent">
+          <h1>TODO</h1>
+          <form onSubmit={this.onSubmit}>
+            <input ref={(item)=>{this.item =item;}}></input>
+            <input type="submit" value="add"></input>
+            <ul>
+              {items}
+            </ul>
+          </form>
+        </div>
+
       );
     }
    });
@@ -179,7 +176,7 @@
 
    var inprogress = gun.get('inprogress');
 
-   var inprogressElem = React.createClass({
+   var InprogressElem = React.createClass({
       getInitialState(){ return {items: {}} },
       componentDidMount(){
         inprogress.map((value,id) => {
@@ -200,26 +197,37 @@
       render(){
         let items = Object.keys(this.state.items).map(i =>
           this.state.items[i] ?
-             React.createElement("li", {key: i}, this.state.items[i],
-             React.createElement("span", {id: i, onClick: this.onClick.bind(this, i)}, " X" )) : ''
+             (
+             <li key={i}>{this.state.items[i]}
+              <span id={i} onClick={this.onClick.bind(this,i)}>X</span>
+
+             </li>
+             ) : ''
+
 
         );
-        return React.createElement("div",{id: "board"},React.createElement("h1",{},"In Progress"),
-          React.createElement("form", {onSubmit: this.onSubmit},
-          React.createElement("input", {ref:(item) => { this.item = item; }}),
-          React.createElement("input", {type:'submit',value:'add'}),
-          React.createElement("ul", {}, items)
-          )
-        );
+        return (
+          <div className="inprogresscontent">
+                <h1>In Progress</h1>
+                <form onSubmit={this.onSubmit}>
+                  <input ref={(item)=>{this.item =item;}}></input>
+                  <input type="submit" value="add"></input>
+                  <ul>
+                    {items}
+                  </ul>
+                </form>
+              </div>);
       }
      });
 
 
-   ReactDOM.render(React.createElement("div", {id:"root"},
-         React.createElement(tdkbapp, {}),
-         React.createElement(todoElem, {}),
-         React.createElement(inprogressElem, {})
-         ),
+   ReactDOM.render(
+        <div id="root">
+          <Tdkbapp />
+          <TodoElem />
+          <InprogressElem />
+        </div>
+       ,
          document.getElementById("tdkb")
        );
   </script>
