@@ -15,11 +15,6 @@
       left: 20%;
       margin-left: 10px;
     }
-    h1 {
-      margin-left: 20%;
-      position: relative;
-
-    }
    .todocontent li {
       color: red;
       font-weight: bolder;
@@ -49,13 +44,103 @@
     cursor: pointer;
    }
 
-   #poppubox {
-     z-index: 1;
-     color: #aaaaaa;
-     font-size: 28px;
-     font-weight: bold;
-
+   body {
+     font-family: Arial, sans-serif;
+     background: url(https://facebook.github.io/react/img/logo_og.png) no-repeat;
+     background-size: cover;
+     height: 100vh;
    }
+
+   h1 {
+     text-align: center;
+     font-family: Tahoma, Arial, sans-serif;
+     color: #06D85F;
+     margin: 80px 0;
+   }
+
+   .box {
+     width: auto
+     margin: 0 auto;
+     background: rgba(255,255,255,0.2);
+     padding: 35px;
+     border: 2px solid #fff;
+     border-radius: 20px/50px;
+     background-clip: padding-box;
+     text-align: center;
+   }
+
+   .button {
+     font-size: 1em;
+     padding: 10px;
+     color: #fff;
+     border: 2px solid #06D85F;
+     border-radius: 20px/50px;
+     text-decoration: none;
+     cursor: pointer;
+     transition: all 0.3s ease-out;
+   }
+   .button:hover {
+     background: #06D85F;
+   }
+
+   .overlay {
+     position: fixed;
+     top: 0;
+     bottom: 0;
+     left: 0;
+     right: 0;
+     background: rgba(0, 0, 0, 0.7);
+     transition: opacity 500ms;
+     visibility: hidden;
+     opacity: 0;
+   }
+   .overlay:target {
+     visibility: visible;
+     opacity: 1;
+   }
+
+   .popup {
+     margin: 70px auto;
+     padding: 20px;
+     background: #fff;
+     border-radius: 5px;
+     width: 30%;
+     position: relative;
+     transition: all 5s ease-in-out;
+   }
+
+   .popup h2 {
+     margin-top: 0;
+     color: #333;
+     font-family: Tahoma, Arial, sans-serif;
+   }
+   .popup .close {
+     position: absolute;
+     top: 20px;
+     right: 30px;
+     transition: all 200ms;
+     font-size: 30px;
+     font-weight: bold;
+     text-decoration: none;
+     color: #333;
+   }
+   .popup .close:hover {
+     color: #06D85F;
+   }
+   .popup .content {
+     max-height: 30%;
+     overflow: auto;
+   }
+
+   @media screen and (max-width: 700px){
+     .box{
+       width: 70%;
+     }
+     .popup{
+       width: 70%;
+     }
+   }
+
    #board {
      float: left;
      position: relative;
@@ -79,7 +164,15 @@
    var PopBox = React.createClass({
      render() {
        return (
-         <div id="poppubox">ADD kanban</div>
+         <div id="popup1" className="overlay">
+         	<div className="popup">
+         		<h2>Here i am</h2>
+         		<a className="close" href="#">&times;</a>
+         		<div className="content">
+         			Thank to pop me out of that button, but now i am done so you can close this window.
+         		</div>
+         	</div>
+         </div>
        );
      }
    });
@@ -87,22 +180,16 @@
    var Tdkbapp = React.createClass({
     getInitialState(){
       var tdkb = gun.get('tdkb');
-      return {tdkb: tdkb, poppubox:'', items:{}}
+      return {items:{}}
     },
-    onClick() {
-      console.log(this.state.tdkb);
-      let poppubox = <PopBox />;
-      this.state.poppubox ?
-      this.setState({poppubox: ''}) :
-      this.setState({poppubox: poppubox});
 
-     },
     render(){
 
       return (
-        <div>
-          <div id="addkanban" onClick={this.onClick}>+ add kanban</div>
-          {this.state.poppubox}
+        <div className="box">
+        	<a className="button" href="#popup1">+Add Board</a>
+          <TodoElem />
+          <InprogressElem />
         </div>
       );
     }
@@ -223,9 +310,8 @@
 
    ReactDOM.render(
         <div id="root">
+          <PopBox />
           <Tdkbapp />
-          <TodoElem />
-          <InprogressElem />
         </div>
        ,
          document.getElementById("tdkb")
