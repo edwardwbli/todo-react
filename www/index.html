@@ -1,321 +1,34 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ToDo</title>
   <script src="https://cdn.rawgit.com/amark/gun/master/gun.js"></script>
   <script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
   <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.4.4/babel.min.js"></script>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-  <style media="screen" type="text/css">
-    .todocontent, .inprogresscontent {
-      float: left;
-      position: relative;
-      left: 20%;
-      margin-left: 10px;
-    }
-   .todocontent li {
-      color: red;
-      font-weight: bolder;
-    }
-   .inprogresscontent li {
-     font-size: 10px;
-     color: blue;
-     font-weight: 500;
-     background-color: #00ff88;
-     margin-top: 3px;
-   }
-   span {
-     color: grey;
-     margin-left: 30px;
-   }
-   div#addkanban {
-     color: #aaaaaa;
-     float: right;
-     font-size: 28px;
-     font-weight: bold;
-   }
+  <link rel="stylesheet"  href="app.css">
 
-   div#addkanban:hover,
-   div#addkanban:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-   }
-
-   body {
-     font-family: Arial, sans-serif;
-     background: url(https://facebook.github.io/react/img/logo_og.png) no-repeat;
-     background-size: cover;
-     height: 100vh;
-   }
-
-   h1 {
-     text-align: center;
-     font-family: Tahoma, Arial, sans-serif;
-     color: #06D85F;
-     margin: 80px 0;
-   }
-
-   .box {
-     width: auto
-     margin: 0 auto;
-     background: rgba(255,255,255,0.2);
-     padding: 35px;
-     border: 2px solid #fff;
-     border-radius: 20px/50px;
-     background-clip: padding-box;
-     text-align: center;
-   }
-
-   .button {
-     font-size: 1em;
-     padding: 10px;
-     color: #fff;
-     border: 2px solid #06D85F;
-     border-radius: 20px/50px;
-     text-decoration: none;
-     cursor: pointer;
-     transition: all 0.3s ease-out;
-   }
-   .button:hover {
-     background: #06D85F;
-   }
-
-   .overlay {
-     position: fixed;
-     top: 0;
-     bottom: 0;
-     left: 0;
-     right: 0;
-     background: rgba(0, 0, 0, 0.7);
-     transition: opacity 500ms;
-     visibility: hidden;
-     opacity: 0;
-   }
-   .overlay:target {
-     visibility: visible;
-     opacity: 1;
-   }
-
-   .popup {
-     margin: 70px auto;
-     padding: 20px;
-     background: #fff;
-     border-radius: 5px;
-     width: 30%;
-     position: relative;
-     transition: all 5s ease-in-out;
-   }
-
-   .popup h2 {
-     margin-top: 0;
-     color: #333;
-     font-family: Tahoma, Arial, sans-serif;
-   }
-   .popup .close {
-     position: absolute;
-     top: 20px;
-     right: 30px;
-     transition: all 200ms;
-     font-size: 30px;
-     font-weight: bold;
-     text-decoration: none;
-     color: #333;
-   }
-   .popup .close:hover {
-     color: #06D85F;
-   }
-   .popup .content {
-     max-height: 30%;
-     overflow: auto;
-   }
-
-   @media screen and (max-width: 700px){
-     .box{
-       width: 70%;
-     }
-     .popup{
-       width: 70%;
-     }
-   }
-
-   #board {
-     float: left;
-     position: relative;
-     left: 20%;
-     margin-left: 10px;
-   }
-  </style>
 </head>
 <body>
   <div class="kanbanheader">
     <h1>Kanban</h1>
   </div>
+
   <div id="tdkb">
-
   </div>
+  <script type="text/babel" src="app.js"></script>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-
-  <script type="text/babel">
-   var gun = Gun(location.origin + '/gun'); /*location.origin will be host name, such as http://localhost:8080/*/
-
-   var PopBox = React.createClass({
-     render() {
-       return (
-         <div id="popup1" className="overlay">
-         	<div className="popup">
-         		<h2>Here i am</h2>
-         		<a className="close" href="#">&times;</a>
-         		<div className="content">
-         			Thank to pop me out of that button, but now i am done so you can close this window.
-         		</div>
-         	</div>
-         </div>
-       );
-     }
-   });
-
-   var Tdkbapp = React.createClass({
-    getInitialState(){
-      var tdkb = gun.get('tdkb');
-      return {items:{}}
-    },
-
-    render(){
-
-      return (
-        <div className="box">
-        	<a className="button" href="#popup1">+Add Board</a>
-          <TodoElem />
-          <InprogressElem />
-        </div>
-      );
-    }
-   }
-   );
-
-
-   var todo = gun.get('todo');
-
-   var TodoElem = React.createClass({
-    getInitialState(){ return {items: {}} },
-    componentDidMount(){
-      todo.map((value,id) => {
-        let items = Object.assign({}, this.state.items, {[id]: value});
-        this.setState({items: items});
-      });
-    },
-    onSubmit(e){
-      e.preventDefault();
-      todo.path(Gun.text.random()).put(this.item.value);
-      console.log('adding', this.item.value);
-      this.item.value = "";
-    },
-    onClick(i) {
-      console.log('delete ' + i);
-      todo.path(i).put(null);
-
-    },
-    /*
-    onClick(e) {
-      console.log('delete ' + e.currentTarget.id )
-      todo.path(e.currentTarget.id).put(nul)
-    },
-    */
-    render() {
-      /*bind event of this, then the handler can get the corresponding element and its argv*/
-      /*React component methods may only be bound to the component instance. in this case onClick is React
-      component methods,
-      /*there is alternative which is using e.currentTarget.id in onClick method to refer to current DOM node's id
-      , without bind for this.onClick, for example :
-
-      this.state.items[i] ?
-         React.createElement("li", {key: i}, this.state.items[i],
-         React.createElement("span", {id: i, onClick: this.onClick}, " X" )) : ''
-
-      */
-      let items = Object.keys(this.state.items).map(i =>
-        this.state.items[i] ? (
-           <li key={i}>{this.state.items[i]}
-            <span id={i} onClick={this.onClick.bind(this,i)}>X</span>
-           </li>) : ''
-
-      );
-      /*ref: will help to create a reference to element itself, e.g. */
-      return (
-        <div className="todocontent">
-          <h1>TODO</h1>
-          <form onSubmit={this.onSubmit}>
-            <input ref={(item)=>{this.item =item;}}></input>
-            <input type="submit" value="add"></input>
-            <ul>
-              {items}
-            </ul>
-          </form>
-        </div>
-
-      );
-    }
-   });
-
-
-   var inprogress = gun.get('inprogress');
-
-   var InprogressElem = React.createClass({
-      getInitialState(){ return {items: {}} },
-      componentDidMount(){
-        inprogress.map((value,id) => {
-          let items = Object.assign({}, this.state.items, {[id]: value});
-          this.setState({items});
-        });
-      },
-      onSubmit(e){
-        e.preventDefault();
-        inprogress.path(Gun.text.random()).put(this.item.value);
-        console.log('adding', this.item.value);
-      },
-      onClick(i) {
-        console.log('inprogrss delete ' + i);
-        inprogress.path(i).put(null);
-
-      },
-      render(){
-        let items = Object.keys(this.state.items).map(i =>
-          this.state.items[i] ?
-             (
-             <li key={i}>{this.state.items[i]}
-              <span id={i} onClick={this.onClick.bind(this,i)}>X</span>
-
-             </li>
-             ) : ''
-
-
-        );
-        return (
-          <div className="inprogresscontent">
-                <h1>In Progress</h1>
-                <form onSubmit={this.onSubmit}>
-                  <input ref={(item)=>{this.item =item;}}></input>
-                  <input type="submit" value="add"></input>
-                  <ul>
-                    {items}
-                  </ul>
-                </form>
-              </div>);
-      }
-     });
-
-
-   ReactDOM.render(
-        <div id="root">
-          <PopBox />
-          <Tdkbapp />
-        </div>
-       ,
-         document.getElementById("tdkb")
-       );
-  </script>
 </body>
 </html>
