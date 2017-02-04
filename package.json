@@ -1,6 +1,6 @@
 {
   "name": "gun-react-todo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A react todo app using gunDB's real-time sync",
   "main": "server.js",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gundb/todo-react.git"
+    "url": "git+https://github.com/edwardwbli/todo-react.git"
   },
   "keywords": [
     "gunDB",
@@ -18,10 +18,10 @@
     "todo",
     "real-time"
   ],
-  "author": "Jesse Gibson <jesse@gundb.io> (http://techllama.com)",
+  "author": "Edward Li",
   "license": "(Zlib OR MIT OR Apache-2.0)",
   "bugs": {
-    "url": "https://github.com/gundb/todo-react/issues"
+    "url": "https://github.com/edwardwbli/todo-react/issues"
   },
   "homepage": "https://github.com/gundb/todo-react#readme",
   "dependencies": {
