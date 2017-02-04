@@ -7,7 +7,7 @@ A react todo list synced through gunDB. Thanks to Forrest for putting this toget
 `git clone` the source
 
 ```sh
-git clone https://github.com/gundb/todo-react.git
+git clone https://github.com/edwardwbli/todo-react.git
 ```
 
 then open that directory in your terminal and run `npm install`
